@@ -1,0 +1,12 @@
+{
+    "name": "hamidreza2005/laravel-api-error-handler",
+    "description": "a package for handle api errors",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hamidreza Hassani",
+            "email": "h.r.hassani2005@gmail.com"
+        }
+    ],
+    "require": {}
+}
