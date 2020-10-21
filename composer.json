@@ -2,11 +2,36 @@
     "name": "hamidreza2005/laravel-api-error-handler",
     "description": "a package for handle api errors",
     "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "api-error-handler",
+        "error-handling",
+        "laravel-api-error-handler"
+    ],
     "authors": [
         {
             "name": "Hamidreza Hassani",
-            "email": "h.r.hassani2005@gmail.com"
+            "email": "h.r.hassani2005@gmail.com",
+            "role": "developer"
         }
     ],
-    "require": {}
+    "require": {
+        "illuminate/support": "~6|~7|~8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "hamidreza2005\\LaravelApiErrorHandler\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "hamidreza2005\\LaravelApiErrorHandler\\LaravelApiErrorHandlerServiceProvider"
+            ]
+        }
+    }
 }
