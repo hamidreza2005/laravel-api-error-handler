@@ -2,8 +2,6 @@
 
 namespace hamidreza2005\LaravelApiErrorHandler\Listeners;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class ErrorListener
 {
@@ -25,6 +23,9 @@ class ErrorListener
      */
     public function handle($event)
     {
-        //
+        if (is_null($event->response->exception)){
+            return;
+        }
+        dd($event->response->exception);
     }
 }
