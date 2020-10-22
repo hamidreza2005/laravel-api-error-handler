@@ -8,9 +8,9 @@ abstract class ExceptionAbstract
 {
     protected $exception;
 
-    private $statusCode;
+    protected $statusCode;
 
-    private $message;
+    protected $message;
 
     public function __construct($exception)
     {

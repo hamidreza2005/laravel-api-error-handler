@@ -26,6 +26,6 @@ class ErrorListener
         if (is_null($event->response->exception)){
             return;
         }
-        dd($event->response->exception);
+        dd(get_class($event->response->exception));
     }
 }
