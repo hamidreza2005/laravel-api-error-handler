@@ -1,10 +1,6 @@
 <?php
-
 namespace hamidreza2005\LaravelApiErrorHandler;
 
-use hamidreza2005\LaravelApiErrorHandler\Listeners\ErrorListener;
-use Illuminate\Foundation\Http\Events\RequestHandled;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelApiErrorHandlerServiceProvider extends ServiceProvider{
@@ -17,9 +13,8 @@ class LaravelApiErrorHandlerServiceProvider extends ServiceProvider{
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Config/api-error-handler.php'=>config_path('api-error-handler.php')
+            __DIR__.'/Config/api-error-handler.php'=>config_path('api-error-handler.php'),
+            __DIR__ .'/Traits/ApiErrorHandler.php'=>app_path('Exceptions/ApiExceptionHandler.php')
         ],'laravel-api-error-handler');
-
-        Event::listen(RequestHandled::class,ErrorListener::class);
     }
 }

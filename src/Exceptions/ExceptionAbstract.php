@@ -1,7 +1,7 @@
 <?php
 
 
-namespace hamidreza2005\laravelApiErrorHandler\Exceptions;
+namespace hamidreza2005\LaravelApiErrorHandler\Exceptions;
 
 
 abstract class ExceptionAbstract
@@ -26,7 +26,7 @@ abstract class ExceptionAbstract
         return $this->statusCode;
     }
 
-    abstract public function handleStatusCode();
+    abstract public function handleStatusCode():void;
 
-    abstract public function handleMessage();
+    abstract public function handleMessage():void;
 }

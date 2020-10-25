@@ -1,18 +1,18 @@
 <?php
 
 
-namespace hamidreza2005\laravelApiErrorHandler\Exceptions;
+namespace hamidreza2005\LaravelApiErrorHandler\Exceptions;
 
 
 class DefaultException extends ExceptionAbstract
 {
 
-    public function handleStatusCode()
+    public function handleStatusCode():void
     {
-        $this->statusCode = method_exists($this->exception,'getStatusCode') ? $this->exception->getStatusCode() : $this->exception->status;
+        $this->statusCode = method_exists($this->exception,'getStatusCode') ? $this->exception->getStatusCode() : 500;
     }
 
-    public function handleMessage()
+    public function handleMessage():void
     {
         $this->message = $this->exception->getMessage();
     }

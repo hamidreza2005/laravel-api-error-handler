@@ -1,18 +1,18 @@
 <?php
 
 
-namespace hamidreza2005\laravelApiErrorHandler\Exceptions;
+namespace hamidreza2005\LaravelApiErrorHandler\Exceptions;
 
 
 class NotFoundException extends ExceptionAbstract
 {
 
-    public function handleStatusCode()
+    public function handleStatusCode():void
     {
         $this->statusCode = 404;
     }
 
-    public function handleMessage()
+    public function handleMessage():void
     {
         $this->message = "Not Found !";
     }
