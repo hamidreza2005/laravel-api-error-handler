@@ -2,9 +2,13 @@
 a useful package for handle your exception when you are developing a API
 ## :inbox_tray: Installation
 you can install this package via Composer:
-`composer require hamidreza2005/laravel-api-error-handler`
+```bash
+composer require hamidreza2005/laravel-api-error-handler
+```
 and after installation you can run following command to publish config files
-`php artisan vendor:publish --tag laravel-api-error-handler`
+```bash
+php artisan vendor:publish --tag laravel-api-error-handler
+```
 ## :gear: Configuration
 for configure this package go to `config/api-error-handler.php`
 ```php
@@ -78,7 +82,7 @@ class Handler extends ExceptionHandler
  }
 ```
 ## Make Your Own Error Handler!
-if you want to make your own handler instead of using default handler you can make a class in everywhere you want **but your class have to Implement `hamidreza2005\LaravelApiErrorHandler\Exceptions\ExceptionAbstract`**
+if you want to make your own handler instead of using default handler you can make a class in everywhere you want **but your class have to Extends `hamidreza2005\LaravelApiErrorHandler\Exceptions\ExceptionAbstract`**
 for Example:
 ```php
 <?php  
