@@ -83,6 +83,7 @@ class Handler extends ExceptionHandler
 ```
 ## Make Your Own Error Handler!
 if you want to make your own handler instead of using default handler you can make a class in everywhere you want **but your class have to Extends `hamidreza2005\LaravelApiErrorHandler\Exceptions\ExceptionAbstract`**
+
 for Example:
 ```php
 <?php  
