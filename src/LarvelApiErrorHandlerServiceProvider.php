@@ -13,8 +13,7 @@ class LaravelApiErrorHandlerServiceProvider extends ServiceProvider{
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/Config/api-error-handler.php'=>config_path('api-error-handler.php'),
-            __DIR__ .'/Traits/ApiErrorHandler.php'=>app_path('Exceptions/ApiExceptionHandler.php')
+            __DIR__.'/Config/api-error-handler.php'=>config_path('api-error-handler.php')
         ],'laravel-api-error-handler');
     }
 }
