@@ -121,6 +121,3 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
   
 ### :raising_hand: Contributing  
 If you find an issue, or have a better way to do something, feel free to open an issue , or a pull request.  
-  
-### :exclamation: Security  
-If you discover any security related issues, please email `h.r.hassani@outlook.com` instead of using the issue tracker.
