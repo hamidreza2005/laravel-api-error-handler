@@ -9,7 +9,7 @@ trait ApiErrorHandler
 {
     public function handleError($exception)
     {
-        $exceptions = config("api-error-handler");
+        $exceptions = config("api-error-handler") ?? [];
         $class = array_key_exists(get_class($exception),$exceptions) ? $exceptions[get_class($exception)] : DefaultException::class;
         $handler = new $class($exception);
         $handler->handleStatusCode();
