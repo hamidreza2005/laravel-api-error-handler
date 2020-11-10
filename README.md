@@ -115,7 +115,7 @@ return [
 ];
 ```
 ### ❗ Notice
-**if an unknown Exception appeared this package automaticlly show it in the response but if you don't want that you can set `APP_DEBUG` to `false` in `.env` . if `APP_DEBUG` is `false` Server Internal shown in response** 
+**if an unknown Exception appeared this package automaticlly show it in the response but if you don't want that you can set `APP_DEBUG` to `false` in `.env` . when `APP_DEBUG` is `false` Server Internal shown in response** 
 ## :scroll: License  
   
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.  
