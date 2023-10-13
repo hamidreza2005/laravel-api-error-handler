@@ -10,7 +10,7 @@ and after installation you can run following command to publish config files
 php artisan vendor:publish --tag laravel-api-error-handler
 ```
 ## :gear: Configuration
-for configure this package go to `config/api-error-handler.php`
+to configure this package go to `config/api-error-handler.php`
 ```php
 <?php  
   
@@ -41,7 +41,7 @@ return [
 |DefaultException|the status code of the Error|the message of the Error|
 
 ## :rocket: let this package get your Errors
-go to the `app\Exceptions\Handler.php` and put this code:
+go to the `app\Exceptions\Handler.php` and add this trait to `ExceptionHandler`:
 ```php
 <?php  
   
