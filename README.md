@@ -1,5 +1,5 @@
 # Laravel Api Error Handler
-a useful package for handle your exception when you are developing a API
+a useful package for handling exception in laravel. 
 ## :inbox_tray: Installation
 you can install this package via Composer:
 ```bash
@@ -15,33 +15,54 @@ to configure this package go to `config/api-error-handler.php`
 <?php  
   
 return [  
-  "Symfony\Component\HttpKernel\Exception\NotFoundHttpException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\NotFoundException",  
-  "ErrorException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\ServerInternalException",  
-  "Illuminate\Database\QueryException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\ServerInternalException",  
-  "Illuminate\Auth\AuthenticationException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\AccessDeniedException",  
-  "Symfony\Component\HttpKernel\Exception\HttpException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\AccessDeniedException",  
-  "Illuminate\Validation\ValidationException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\ValidationException", 
-  "Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException"=>"\hamidreza2005\LaravelApiErrorHandler\Exceptions\NotFoundException", 
+    /*
+     * this is where you define which handler deal with which errors. each handler can handle multiple errors
+     */
+
+    "handlers" =>[
+        NotFoundExceptionHandler::class => [
+            "Symfony\Component\HttpKernel\Exception\NotFoundHttpException",
+            "Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException"
+        ],
+        ServerInternalExceptionHandler::class => [
+            "ErrorException",
+            "Illuminate\Database\QueryException"
+        ],
+        AccessDeniedExceptionHandler::class => [
+            "Illuminate\Auth\AuthenticationException",
+            "Symfony\Component\HttpKernel\Exception\HttpException"
+        ],
+        ValidationExceptionHandler::class => [
+            "Illuminate\Validation\ValidationException"
+        ],
+    ],
+
+    /*
+     * if the app is not in debug mode. all unknown exceptions will be handled by this.
+     */
+    "internal_error_handler" => ServerInternalExceptionHandler::class,
 ];
 ```
-this package provide some common exception like `ModelNotFound` But if you want to customize it you can do like this :
+this package provides some handlers for common exceptions like `ModelNotFound` But if you want to customize it you can do like this :
 ```php
 <?php  
   
 return [  
-  "Your Error Namespace" => "the class that handle this error",   
+  YourHandler::class => [
+        // exceptions
+    ],   
 ];
 ```
-|Class| Status Code  | Message|
-|--|--|--|
-|NotFoundException  |404  |Not Found|
-|ServerInternalException|500|Server Internal Error
-|AccessDeniedException|403|Access Denied|
-|ValidationException|422|it returns all errors in validation|
-|DefaultException|the status code of the Error|the message of the Error|
+|Class| Status Code                      | Message                      |
+|--|----------------------------------|------------------------------|
+|NotFoundException  | 404                              | Not Found                    |
+|ServerInternalException| 500                              | Server Internal Error        
+|AccessDeniedException| 403                              | Access Denied                |
+|ValidationException| 422                              | all validation errors        |
+|DefaultException| the status code of the Exception | the message of the Exception |
 
-## :rocket: let this package get your Errors
-go to the `app\Exceptions\Handler.php` and add this trait to `ExceptionHandler`:
+## :rocket: how to let handlers do their job ?
+add `ApiErrorHandler` trait to `ExceptionHandler` located in `app\Exceptions\Handler.php`:
 ```php
 <?php  
   
@@ -78,14 +99,14 @@ class Handler extends ExceptionHandler
   
 	 public function render($request, Throwable $e)  
 	 {
-		  return $this->handleError($this->prepareException($e));  
+		  return $this->handle($this->prepareException($e));  
 	 }
  }
 ```
-## Make Your Own Error Handler!
+## Make Your Own Exception Handler!
 if you want to make your own handler instead of using default handler you can make a class in everywhere you want **but your class have to Extends `hamidreza2005\LaravelApiErrorHandler\Exceptions\ExceptionAbstract`**
 
-for Example:
+i.e:
 ```php
 <?php  
   
@@ -106,16 +127,7 @@ class MyException extends ExceptionAbstract
 	  }
  }
 ```
-and you can do like this in `config/api-error-handler.php`:
-```php
-<?php
-
-return [
-	"ErrorException" => "myNamespace\MyException"
-];
-```
-### :exclamation_mark: Notice
-**if an unknown Exception appeared this package automaticlly show it in the response but if you don't want that you can set `APP_DEBUG` to `false` in `.env` . if `APP_DEBUG` is `false` Server Internal showen in response** 
+ 
 ## :scroll: License  
   
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.  
