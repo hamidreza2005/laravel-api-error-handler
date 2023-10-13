@@ -104,21 +104,17 @@ class Handler extends ExceptionHandler
  }
 ```
 ## Make Your Own Exception Handler!
-if you want to make your own handler instead of using default handler you can make a class in everywhere you want **but your class have to Extends `hamidreza2005\LaravelApiErrorHandler\Exceptions\ExceptionAbstract`**
+if you want to make your own handler your class has to extend `hamidreza2005\LaravelApiErrorHandler\Handlers\ExceptionHandler`
 
 i.e:
 ```php
 <?php  
-  
-  
-namespace myNamespace;  
-  
-  
-class MyException extends ExceptionAbstract  
+
+class MyException extends ExceptionHandler  
 {  
 	  public function handleStatusCode():void  
 	  {  
-		  $this->statusCode = 2018;  
+		  $this->statusCode = 499;  
 	  }
 	   
 	  public function handleMessage():void  
