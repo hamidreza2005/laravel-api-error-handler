@@ -1,10 +1,10 @@
 <?php
 
-use hamidreza2005\LaravelApiErrorHandler\Exceptions\{
-    ServerInternalException,
-    NotFoundException,
-    AccessDeniedException,
-    ValidationException
+use hamidreza2005\LaravelApiErrorHandler\Handlers\{
+    ServerInternalExceptionHandler,
+    NotFoundExceptionHandler,
+    AccessDeniedExceptionHandler,
+    ValidationExceptionHandler
 };
 
 return [
@@ -14,19 +14,19 @@ return [
      */
 
     "handlers" =>[
-        NotFoundException::class => [
+        NotFoundExceptionHandler::class => [
             "Symfony\Component\HttpKernel\Exception\NotFoundHttpException",
             "Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException"
         ],
-        ServerInternalException::class => [
+        ServerInternalExceptionHandler::class => [
             "ErrorException",
             "Illuminate\Database\QueryException"
         ],
-        AccessDeniedException::class => [
+        AccessDeniedExceptionHandler::class => [
             "Illuminate\Auth\AuthenticationException",
             "Symfony\Component\HttpKernel\Exception\HttpException"
         ],
-        ValidationException::class => [
+        ValidationExceptionHandler::class => [
             "Illuminate\Validation\ValidationException"
         ],
     ],
@@ -34,5 +34,5 @@ return [
     /*
      * if the app is not in debug mode. all unknown exceptions will be handled by this.
      */
-    "internal_error_handler" => ServerInternalException::class,
+    "internal_error_handler" => ServerInternalExceptionHandler::class,
 ];

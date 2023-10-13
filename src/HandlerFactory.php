@@ -2,9 +2,9 @@
 
 namespace hamidreza2005\LaravelApiErrorHandler;
 
-use hamidreza2005\LaravelApiErrorHandler\Exceptions\DefaultException;
-use hamidreza2005\LaravelApiErrorHandler\Exceptions\ExceptionAbstract;
-use hamidreza2005\LaravelApiErrorHandler\Exceptions\ServerInternalException;
+use hamidreza2005\LaravelApiErrorHandler\Handlers\DefaultExceptionHandler;
+use hamidreza2005\LaravelApiErrorHandler\Handlers\ExceptionHandler;
+use hamidreza2005\LaravelApiErrorHandler\Handlers\ServerInternalExceptionHandler;
 use Illuminate\Support\Facades\Config;
 
 class HandlerFactory
@@ -23,7 +23,7 @@ class HandlerFactory
     protected function loadHandlers(): void
     {
         $this->handlers = $this->loadHandlersFromConfigs();
-        $this->internalErrorHandler = Config::get("api-error-handler.internal_error_handler") ?? ServerInternalException::class;
+        $this->internalErrorHandler = Config::get("api-error-handler.internal_error_handler") ?? ServerInternalExceptionHandler::class;
     }
 
     private function loadHandlersFromConfigs(): array
@@ -55,12 +55,12 @@ class HandlerFactory
         return new $handlerClassName($exception);
     }
 
-    public function getHandler($exception): ExceptionAbstract
+    public function getHandler($exception): ExceptionHandler
     {
         $handlerClassName = $this->findHandlerByException($exception);
         if (!$handlerClassName){
             $handlerClassName = $this->debugMode ?
-                DefaultException::class :
+                DefaultExceptionHandler::class :
                 $this->internalErrorHandler;
         }
 
