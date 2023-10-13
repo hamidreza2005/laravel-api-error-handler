@@ -2,28 +2,28 @@
 
 namespace hamidreza2005\LaravelApiErrorHandler\Traits;
 
-use hamidreza2005\LaravelApiErrorHandler\Exceptions\DefaultException;
-use hamidreza2005\LaravelApiErrorHandler\Exceptions\ServerInternalException;
+use hamidreza2005\LaravelApiErrorHandler\HandlerFactory;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Http\Response;
 
 trait ApiErrorHandler
 {
-    public function handleError($exception): JsonResponse
+    public function handle($exception): JsonResponse
     {
-        $exceptions = config("api-error-handler") ?? [];
-        $class = array_key_exists(get_class($exception),$exceptions) ?
-            $exceptions[get_class($exception)] :
-            (config('app.debug') ? DefaultException::class : ServerInternalException::class
-        );
-        $handler = new $class($exception);
+        $handler = (new HandlerFactory())->getHandler($exception);
         $handler->handleStatusCode();
         $handler->handleMessage();
-        return $this->errorResponse(["error"=>$handler->getMessage()],$handler->getStatusCode(),["Content-Type"=>"application/json"]);
+        return $this->errorResponse($handler->getMessage(),[],$handler->getStatusCode(),["Content-Type"=>"application/json"]);
     }
 
-    protected function errorResponse(array $data,int $statusCode, array $headers): JsonResponse
+    protected function errorResponse(string $message, array $data = [] ,int $statusCode = Response::HTTP_BAD_REQUEST, array $headers = []): JsonResponse
     {
-        return Response::json($data,$statusCode,$headers);
+        $result = [
+            "message" => $message,
+            "success" => false,
+            "data" => $data,
+            "status" => $statusCode
+        ];
+        return response()->json($result,$statusCode,$headers);
     }
 }

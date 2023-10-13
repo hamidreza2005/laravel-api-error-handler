@@ -1,11 +1,38 @@
 <?php
 
+use hamidreza2005\LaravelApiErrorHandler\Exceptions\{
+    ServerInternalException,
+    NotFoundException,
+    AccessDeniedException,
+    ValidationException
+};
+
 return [
-    "Symfony\Component\HttpKernel\Exception\NotFoundHttpException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\NotFoundException",
-    "ErrorException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\ServerInternalException",
-    "Illuminate\Database\QueryException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\ServerInternalException",
-    "Illuminate\Auth\AuthenticationException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\AccessDeniedException",
-    "Symfony\Component\HttpKernel\Exception\HttpException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\AccessDeniedException",
-    "Illuminate\Validation\ValidationException" => "\hamidreza2005\LaravelApiErrorHandler\Exceptions\ValidationException",
-    "Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException"=>"\hamidreza2005\LaravelApiErrorHandler\Exceptions\NotFoundException",
+
+    /*
+     * this is where you define which handler deal with which errors. each handler can handle multiple errors
+     */
+
+    "handlers" =>[
+        NotFoundException::class => [
+            "Symfony\Component\HttpKernel\Exception\NotFoundHttpException",
+            "Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException"
+        ],
+        ServerInternalException::class => [
+            "ErrorException",
+            "Illuminate\Database\QueryException"
+        ],
+        AccessDeniedException::class => [
+            "Illuminate\Auth\AuthenticationException",
+            "Symfony\Component\HttpKernel\Exception\HttpException"
+        ],
+        ValidationException::class => [
+            "Illuminate\Validation\ValidationException"
+        ],
+    ],
+
+    /*
+     * if the app is not in debug mode. all unknown exceptions will be handled by this.
+     */
+    "internal_error_handler" => ServerInternalException::class,
 ];
