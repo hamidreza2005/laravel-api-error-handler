@@ -103,6 +103,39 @@ class Handler extends ExceptionHandler
 	 }
  }
 ```
+
+Register `app\Exceptions\Handler.php` in AppServiceProvider:
+```php
+<?php  
+  
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Debug\ExceptionHandler;
+use App\Exceptions\Handler;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        $this->app->singleton(
+            ExceptionHandler::class,
+            Handler::class
+        );
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        //
+    }
+}
+```
 ## Make Your Own Exception Handler!
 if you want to make your own handler your class has to extend `hamidreza2005\LaravelApiErrorHandler\Handlers\ExceptionHandler`
 
