@@ -1,4 +1,4 @@
-# Laravel Api Error Handler (fork for Laravel 10+)
+# Laravel Api Error Handler
 a useful package for handling exception in laravel. 
 ## :inbox_tray: Installation
 you can install this package via Composer:
