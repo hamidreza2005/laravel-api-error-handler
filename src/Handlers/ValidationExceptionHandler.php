@@ -11,7 +11,7 @@ class ValidationExceptionHandler extends ExceptionHandler
 
     protected function setMessage(): void
     {
-        $this->message = $this->exception->errors();
+        $this->message = $this->exception->getMessage();
     }
 
     protected function setData(): void
